@@ -1,24 +1,22 @@
 // parameters
 
-table_diameter = 150;
-table_thickness = 3;
-table_border = 30;
+table_diameter = 140; // outer table diamter
+table_thickness = 3; // thickness of base plate
+table_border = 30; // solid border of table without a pattern
 
-bore_diameter = 8;
-bore_dist = 2;
+leg_height = 20; // height of table legs
+leg_diameter = 10; // outer diameter of table legs
+leg_cnt = 8; // number of table legs
+leg_inset = 5; // inset from outer table diameter
+leg_weight_bore_dia = 4.8; // for use of a screw to lower center of greavity e.g. 4.8mm for M5
 
-leg_height = 20;
-leg_diameter = 10;
-leg_cnt = 8; //number of legs
-leg_inset = 5; //inset from outer table diameter
-leg_weight_bore_dia = 5.8; //for use of a screw to lower center of greavity 
+this_pattern_space = 15; // space between pattern centers
+this_pattern_dia = 15; // pattern diameter size
+this_pattern_res = 6; // pattern resolution (3: trangle; 6: hexagon)
+
+this_pattern_num = table_diameter/this_pattern_dia+3;
 
 rotation_angle_legs = 360/leg_cnt;
-
-this_pattern_space = 15;
-this_pattern_dia = 15;
-this_pattern_res = 6;
-this_pattern_num = table_diameter/this_pattern_dia+3;
 
 //main
 difference(){
@@ -30,7 +28,7 @@ difference(){
         linear_extrude(table_thickness+1, center = true){
             circle(d = table_diameter-table_border);
             }
-        translate([-table_diameter/2,-table_diameter/2,0]) //center the pattern
+        translate([-table_diameter/2-this_pattern_dia/3,-table_diameter/2+this_pattern_dia*2/3,0]) //center the pattern
             linear_extrude(table_thickness+1, center = true){
                 hole_pattern(this_pattern_num, this_pattern_num, this_pattern_space, sqrt(3)/2*this_pattern_space, this_pattern_dia, this_pattern_res);
         }
